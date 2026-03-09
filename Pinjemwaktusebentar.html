@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Rahasia</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .hidden {
+            display: none !important;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+        }
+
+        .card {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: float 3s ease-in-out infinite;
+            max-width: 90%;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 94, 98, 0.5);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 10px;
+            color: #fff;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff5e62, #ff9966);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 94, 98, 0.8);
+        }
+
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+
+        .message-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 80%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .message-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #fff;
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        #typewriter {
+            display: inline-block;
+            white-space: pre-wrap;
+            border-right: none;
+        }
+
+        .name-bubble {
+            display: inline-block;
+            background: rgba(255, 94, 98, 0.8);
+            color: white;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .timer {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #ff9966;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HALAMAN 1 -->
+    <div id="page-1" class="page">
+        <div class="card">
+            <h1>Pinjam Waktunya Sebentar</h1>
+            <h2>Yaa...</h2>
+            <button onclick="goToPage(2)">Buka Pesan</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 2 -->
+    <div id="page-2" class="page hidden">
+        <div class="message-container">
+            <div class="name-bubble">For Nisa</div>
+            <div class="message-text" id="typewriter"></div>
+            <div class="timer" id="timer"></div>
+        </div>
+    </div>
+
+    <!-- Lagu otomatis -->
+    <audio id="bgMusic" src="audiosad.mpeg" preload="auto" loop></audio>
+
+    <script>
+        const text = `I don't even know if you'll ever read this. But if you do... there is something I've kept in my heart for a long time. 
+I have liked you for longer than you realize. Maybe you never noticed it.  
+
+You might think I’ve only liked you since 10th grade, but you’re wrong.  
+
+We actually met once before high school. I don't know if you remember that moment, but I still do.  
+
+Since then, somehow you stayed in my mind.  
+
+And until now... I still like you.  
+
+But maybe you never saw me that way, and maybe you never will.  
+Still, I just wanted you to know the truth that I’ve kept hidden all this time.  
+
+Anyway, I hope you’re doing okay. I don’t expect too much from your answer.  
+Please just forget this message, and I hope we can continue being friends without any romantic feelings.  
+I don’t want to ruin our friendship.  
+
+Thank you for taking the time to read this.
+~A`;
+
+        const typewriterElement = document.getElementById("typewriter");
+        const timerElement = document.getElementById("timer");
+        let index = 0;
+
+        function typeWriter(){
+            if(index < text.length){
+                typewriterElement.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter,50);
+            } else {
+                // Setelah typewriter selesai, mulai countdown 5 detik
+                let countdown = 5;
+                timerElement.innerHTML = `Web ini akan keluar dalam ${countdown} detik`;
+                const countdownInterval = setInterval(() => {
+                    countdown--;
+                    if(countdown > 0){
+                        timerElement.innerHTML = `Web ini akan keluar dalam ${countdown} detik`;
+                    } else {
+                        clearInterval(countdownInterval);
+                        // Coba tutup halaman, jika diblokir tampil pesan
+                        try {
+                            window.close();
+                            setTimeout(() => {
+                                if(!window.closed){
+                                    timerElement.innerHTML = `Web ini diblokir untuk menutup otomatis. Silakan tutup halaman ini secara manual.`;
+                                }
+                            }, 500);
+                        } catch {
+                            timerElement.innerHTML = `Web ini diblokir untuk menutup otomatis. Silakan tutup halaman ini secara manual.`;
+                        }
+                    }
+                }, 1000);
+            }
+        }
+
+        function goToPage(pageNumber){
+            document.getElementById('page-1').classList.add('hidden');
+            document.getElementById('page-2').classList.add('hidden');
+
+            document.getElementById('page-' + pageNumber).classList.remove('hidden');
+
+            if(pageNumber === 2 && index === 0){
+                typeWriter();
+                const music = document.getElementById("bgMusic");
+                music.play().catch(() => {
+                    console.log("Audio autoplay diblokir, klik layar untuk memulai lagu.");
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
