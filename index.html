@@ -1,233 +1,390 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pesan Rahasia</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pesan Rahasia</title>
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            font-family: 'Poppins', sans-serif;
-            color: white;
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap');
 
-        .page {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-        }
+body{
+margin:0;
+padding:0;
+background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+font-family:'Poppins',sans-serif;
+color:white;
+position:relative;
+}
 
-        .hidden {
-            display: none !important;
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.9);
-        }
+.page{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+transition:opacity 0.5s ease-in-out,transform 0.5s ease-in-out;
+}
 
-        .card {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: float 3s ease-in-out infinite;
-            max-width: 90%;
-        }
+.hidden{
+display:none !important;
+opacity:0;
+pointer-events:none;
+transform:scale(0.9);
+}
 
-        h1 {
-            font-family: 'Pacifico', cursive;
-            font-size: 3rem;
-            margin: 0;
-            background: linear-gradient(to right, #ff9966, #ff5e62);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255, 94, 98, 0.5);
-        }
+.card{
+text-align:center;
+background:rgba(255,255,255,0.1);
+padding:40px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 20px rgba(0,0,0,0.5);
+border:1px solid rgba(255,255,255,0.2);
+animation:float 3s ease-in-out infinite;
+max-width:90%;
+position:relative;
+}
 
-        h2 {
-            font-size: 2rem;
-            margin-top: 10px;
-            color: #fff;
-        }
+h1{
+font-family:'Pacifico',cursive;
+font-size:3rem;
+margin:0;
+background:linear-gradient(to right,#ff9966,#ff5e62);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-shadow:0 0 10px rgba(255,94,98,0.5);
+}
 
-        button {
-            margin-top: 30px;
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            background: linear-gradient(45deg, #ff5e62, #ff9966);
-            color: white;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+h2{
+font-size:2rem;
+margin-top:10px;
+color:#fff;
+}
 
-        button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 94, 98, 0.8);
-        }
+button{
+margin-top:30px;
+padding:12px 30px;
+font-size:1.2rem;
+border:none;
+border-radius:50px;
+background:linear-gradient(45deg,#ff5e62,#ff9966);
+color:white;
+cursor:pointer;
+transition:transform 0.2s,box-shadow 0.2s;
+}
 
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+button:hover{
+transform:scale(1.1);
+box-shadow:0 0 15px rgba(255,94,98,0.8);
+}
 
-        .message-container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.2);
-            max-width: 80%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0px);}
+}
 
-        .message-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #fff;
-            text-align: left;
-            padding: 0 20px;
-        }
+.message-container{
+text-align:center;
+background:rgba(255,255,255,0.1);
+padding:40px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 20px rgba(0,0,0,0.5);
+border:1px solid rgba(255,255,255,0.2);
+max-width:80%;
+max-height:80vh;
+overflow-y:auto;
+}
 
-        #typewriter {
-            display: inline-block;
-            white-space: pre-wrap;
-            border-right: none;
-        }
+.message-text{
+font-size:1.1rem;
+line-height:1.8;
+color:#fff;
+text-align:left;
+padding:0 20px;
+}
 
-        .name-bubble {
-            display: inline-block;
-            background: rgba(255, 94, 98, 0.8);
-            color: white;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
+#typewriter{
+display:inline-block;
+white-space:pre-wrap;
+border-right:none;
+}
 
-        .timer {
-            margin-top: 20px;
-            font-size: 1rem;
-            color: #ff9966;
-            font-weight: 600;
-        }
-    </style>
+.name-bubble{
+display:inline-block;
+background:rgba(255,94,98,0.8);
+color:white;
+font-weight:600;
+padding:8px 16px;
+border-radius:20px;
+margin-bottom:20px;
+font-size:1.1rem;
+text-align:center;
+box-shadow:0 2px 6px rgba(0,0,0,0.3);
+}
+
+.timer{
+margin-top:20px;
+font-size:1rem;
+color:#ff9966;
+font-weight:600;
+}
+
+#snow-canvas{
+position:absolute;
+top:0;
+left:0;
+pointer-events:none;
+width:100%;
+height:100%;
+z-index:10;
+}
+
+/* POSISI KUCING DIPERBAIKI */
+.cat-container{
+position:absolute;
+top:5px;          /* lebih ke atas */
+left:45%;         /* sedikit ke kiri */
+transform:translateX(-50%);
+display:flex;
+flex-direction:column;
+align-items:center;
+animation:catBounce 2s infinite;
+z-index:5;
+}
+
+.cat-container img{
+width:100px;      /* lebih rapi */
+}
+
+.cat-text{
+margin-top:10px;
+font-family:'Pacifico',cursive;
+font-size:1.5rem;
+color:#fff;
+text-shadow:0 0 8px #000;
+}
+
+@keyframes catBounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-15px);}
+}
+</style>
 </head>
+
 <body>
 
-    <!-- HALAMAN 1 -->
-    <div id="page-1" class="page">
-        <div class="card">
-            <h1>Pinjam Waktunya Sebentar</h1>
-            <h2>Yaa...</h2>
-            <button onclick="goToPage(2)">Buka Pesan</button>
-        </div>
-    </div>
+<canvas id="snow-canvas"></canvas>
 
-    <!-- HALAMAN 2 -->
-    <div id="page-2" class="page hidden">
-        <div class="message-container">
-            <div class="name-bubble">For Nisa</div>
-            <div class="message-text" id="typewriter"></div>
-            <div class="timer" id="timer"></div>
-        </div>
-    </div>
+<!-- PAGE 1 -->
+<div id="page-1" class="page">
 
-    <!-- Lagu otomatis -->
-    <audio id="bgMusic" src="audiosad.mpeg" preload="auto" loop></audio>
+<div class="card">
+<h1>Pinjam Waktunya Sebentar</h1>
+<h2>Yaa...</h2>
+<button onclick="goToPage(2)">Buka Pesan</button>
+</div>
 
-    <script>
-        const text = `I don't even know if you'll ever read this. But if you do... there is something I've kept in my heart for a long time. 
-I have liked you for longer than you realize. Maybe you never noticed it.  
+<div class="cat-container">
+<img src="https://4.bp.blogspot.com/-_Gtb9mr-XeM/U0tmTSbBxsI/AAAAAAAACQc/Gsi2b7UloTg/s1600/animasi-bergerak-kucing3.gif">
+<div class="cat-text">Hai Nisa!</div>
+</div>
 
-You might think I’ve only liked you since 10th grade, but you’re wrong.  
+</div>
 
-We actually met once before high school. I don't know if you remember that moment, but I still do.  
+<!-- PAGE 2 -->
+<div id="page-2" class="page hidden">
 
-Since then, somehow you stayed in my mind.  
+<div class="message-container">
+<div class="name-bubble">For Nisa</div>
+<div class="message-text" id="typewriter"></div>
+<div class="timer" id="timer"></div>
+</div>
 
-And until now... I still like you.  
+</div>
 
-But maybe you never saw me that way, and maybe you never will.  
-Still, I just wanted you to know the truth that I’ve kept hidden all this time.  
+<audio id="bgMusic" src="audiosad.mpeg" preload="auto" loop></audio>
 
-Anyway, I hope you’re doing okay. I don’t expect too much from your answer.  
-Please just forget this message, and I hope we can continue being friends without any romantic feelings.  
-I don’t want to ruin our friendship.  
+<script>
 
-Thank you for taking the time to read this.
-~A`;
+const text=`I don't even know if you'll ever read this. But if you do... there is something I've kept in my heart for a long time.
 
-        const typewriterElement = document.getElementById("typewriter");
-        const timerElement = document.getElementById("timer");
-        let index = 0;
+I have liked you for longer than you realize.
 
-        function typeWriter(){
-            if(index < text.length){
-                typewriterElement.innerHTML += text.charAt(index);
-                index++;
-                setTimeout(typeWriter,50);
-            } else {
-                // Setelah typewriter selesai, mulai countdown 5 detik
-                let countdown = 5;
-                timerElement.innerHTML = `Web ini akan keluar dalam ${countdown} detik`;
-                const countdownInterval = setInterval(() => {
-                    countdown--;
-                    if(countdown > 0){
-                        timerElement.innerHTML = `Web ini akan keluar dalam ${countdown} detik`;
-                    } else {
-                        clearInterval(countdownInterval);
-                        // Coba tutup halaman, jika diblokir tampil pesan
-                        try {
-                            window.close();
-                            setTimeout(() => {
-                                if(!window.closed){
-                                    timerElement.innerHTML = `Web ini diblokir untuk menutup otomatis. Silakan tutup halaman ini secara manual.`;
-                                }
-                            }, 500);
-                        } catch {
-                            timerElement.innerHTML = `Web ini diblokir untuk menutup otomatis. Silakan tutup halaman ini secara manual.`;
-                        }
-                    }
-                }, 1000);
-            }
-        }
+You might think I’ve only liked you since 10th grade, but you’re wrong.
 
-        function goToPage(pageNumber){
-            document.getElementById('page-1').classList.add('hidden');
-            document.getElementById('page-2').classList.add('hidden');
+We actually met once before high school. I don't know if you remember that moment, but I still do.
 
-            document.getElementById('page-' + pageNumber).classList.remove('hidden');
+Since then, somehow you stayed in my mind.
 
-            if(pageNumber === 2 && index === 0){
-                typeWriter();
-                const music = document.getElementById("bgMusic");
-                music.play().catch(() => {
-                    console.log("Audio autoplay diblokir, klik layar untuk memulai lagu.");
-                });
-            }
-        }
-    </script>
+And until now... I still like you.
+
+But maybe you never saw me that way.
+
+Still, I just wanted you to know the truth.
+
+Anyway, I hope you’re doing okay.
+
+Please just forget this message, and I hope we can continue being friends.
+
+Thank you for taking the time to read this.`
+
+const typewriterElement=document.getElementById("typewriter")
+const timerElement=document.getElementById("timer")
+
+let index=0
+
+function typeWriter(){
+if(index<text.length){
+typewriterElement.innerHTML+=text.charAt(index)
+index++
+setTimeout(typeWriter,50)
+}else{
+
+let countdown=5
+timerElement.innerHTML=`Web ini akan keluar dalam ${countdown} detik`
+
+const countdownInterval=setInterval(()=>{
+
+countdown--
+
+if(countdown>0){
+timerElement.innerHTML=`Web ini akan keluar dalam ${countdown} detik`
+}else{
+
+clearInterval(countdownInterval)
+
+try{
+window.close()
+
+setTimeout(()=>{
+if(!window.closed){
+timerElement.innerHTML="Silakan tutup halaman ini secara manual"
+}
+},500)
+
+}catch{
+timerElement.innerHTML="Silakan tutup halaman ini secara manual"
+}
+
+}
+
+},1000)
+
+}
+}
+
+function goToPage(pageNumber){
+
+document.getElementById('page-1').classList.add('hidden')
+document.getElementById('page-2').classList.add('hidden')
+
+document.getElementById('page-'+pageNumber).classList.remove('hidden')
+
+if(pageNumber===2 && index===0){
+
+typeWriter()
+
+const music=document.getElementById("bgMusic")
+
+music.play().catch(()=>{
+console.log("Audio autoplay diblokir")
+})
+
+}
+
+}
+
+/* SALJU */
+
+const canvas=document.getElementById("snow-canvas")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+const snowflakes=[]
+const numFlakes=100
+
+for(let i=0;i<numFlakes;i++){
+snowflakes.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*4+1,
+d:Math.random()*1+1
+})
+}
+
+function drawSnow(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+ctx.beginPath()
+
+for(let i=0;i<numFlakes;i++){
+
+let f=snowflakes[i]
+
+ctx.moveTo(f.x,f.y)
+
+ctx.arc(f.x,f.y,f.r,0,Math.PI*2,true)
+
+}
+
+ctx.fill()
+
+updateSnow()
+
+}
+
+let angle=0
+
+function updateSnow(){
+
+angle+=0.01
+
+for(let i=0;i<numFlakes;i++){
+
+let f=snowflakes[i]
+
+f.y+=Math.cos(angle+f.d)+1+f.r/2
+
+f.x+=Math.sin(angle)*2
+
+if(f.y>canvas.height){
+
+f.y=-5
+f.x=Math.random()*canvas.width
+
+}
+
+}
+
+requestAnimationFrame(drawSnow)
+
+}
+
+drawSnow()
+
+window.addEventListener("resize",()=>{
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+})
+
+</script>
 
 </body>
 </html>
