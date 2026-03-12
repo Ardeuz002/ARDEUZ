@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ucapan Idul Fitri</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#0f9b0f,#00c853);
+color:white;
+text-align:center;
+overflow:hidden;
+}
+
+/* halaman */
+.page{
+display:none;
+height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+padding:20px;
+}
+
+.active{
+display:flex;
+}
+
+/* tombol */
+button{
+padding:12px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:white;
+color:#0f9b0f;
+cursor:pointer;
+margin-top:20px;
+font-weight:bold;
+}
+
+button:hover{
+background:#ffe082;
+}
+
+/* kartu */
+.card{
+background:rgba(255,255,255,0.15);
+padding:30px;
+border-radius:15px;
+max-width:500px;
+backdrop-filter:blur(5px);
+}
+
+/* judul */
+h1{
+font-size:38px;
+margin-bottom:10px;
+}
+
+p{
+font-size:18px;
+}
+
+/* bulan */
+.moon{
+font-size:80px;
+margin-bottom:20px;
+}
+
+video{
+margin-top:15px;
+border-radius:10px;
+}
+
+/* BINTANG */
+.star{
+position:fixed;
+top:-20px;
+color:#fff59d;
+font-size:20px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(0) rotate(0deg);
+opacity:1;
+}
+100%{
+transform:translateY(100vh) rotate(360deg);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO -->
+<audio id="lagu" loop>
+<source src="AUDIOIDULFITRI.mpeg.mp4" type="audio/mpeg">
+</audio>
+
+<!-- HALAMAN 1 -->
+<div class="page active" id="page1">
+
+<div class="card">
+
+<div class="moon">🌙✨</div>
+
+<h1>Selamat Idul Fitri</h1>
+
+<p>MOHON MAAF LAHIR DAN BATIN</p>
+
+<button onclick="nextPage(2)">Masuk</button>
+
+</div>
+
+</div>
+
+
+<!-- HALAMAN 2 -->
+<div class="page" id="page2">
+
+<div class="card">
+
+<h1>🌙 Selamat Hari Raya Idul Fitri 🌙</h1>
+
+<p>
+Taqabbalallahu minna wa minkum
+<br><br>
+Kami dari Wusto mengucapkan Selamat Hari Raya Idul Fitri 1447 H.
+Taqabbalallahu minna wa minkum, taqabbal yaa kariim.
+
+Mohon maaf lahir dan batin. Kami memohon maaf yang sebesar-besarnya apabila selama ini terdapat kesalahan dalam perkataan, sikap, maupun perlakuan kami kepada teman-teman sekalian, baik yang disengaja maupun yang tidak disengaja.
+
+Semoga di hari yang suci dan penuh berkah ini kita semua diberikan hati yang bersih, saling memaafkan, serta mempererat tali persaudaraan dan kebersamaan di antara kita.
+
+Semoga kebahagiaan, kedamaian, kesehatan, dan keberkahan selalu menyertai kita semua, serta menjadikan kita pribadi yang lebih baik di masa yang akan datang.
+
+Selamat merayakan Hari Raya Idul Fitri.
+Mohon maaf lahir dan batin.
+
+</p>
+
+<button onclick="nextPage(3)">Lihat Video</button>
+
+</div>
+
+</div>
+
+
+<!-- HALAMAN 3 -->
+<div class="page" id="page3">
+
+<div class="card">
+
+<h1>Video Ucapan Idul Fitri</h1>
+
+<video width="320" controls>
+<source src="videowusto.mp4" type="video/mp4">
+</video>
+
+<br>
+
+<button onclick="nextPage(4)">Lihat Barcode</button>
+
+</div>
+
+</div>
+
+
+<!-- HALAMAN 4 -->
+<div class="page" id="page4">
+
+<div class="card">
+
+<h1>DANA KAGET</h1>
+
+<p>Saldo dana untuk 10 orang tercepat</p>
+
+<img src="gorilla.png" width="220">
+
+<br>
+
+<button onclick="nextPage(1)">Kembali ke Awal</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+const lagu = document.getElementById("lagu");
+
+function nextPage(page){
+
+document.querySelectorAll('.page').forEach(p=>{
+p.classList.remove('active');
+});
+
+document.getElementById('page'+page).classList.add('active');
+
+/* kontrol lagu */
+
+if(page === 2){
+lagu.play().catch(()=>{});
+}
+
+if(page === 3){
+lagu.pause();
+}
+
+if(page === 1){
+lagu.currentTime = 0;
+}
+
+}
+
+
+/* BINTANG JATUH */
+
+function createStar(){
+
+const star = document.createElement("div");
+star.classList.add("star");
+
+const stars = ["⭐","✨","🌟"];
+
+star.innerHTML = stars[Math.floor(Math.random()*stars.length)];
+
+star.style.left = Math.random()*100 + "vw";
+star.style.animationDuration = (Math.random()*3+2)+"s";
+star.style.fontSize = (Math.random()*20+10)+"px";
+
+document.body.appendChild(star);
+
+setTimeout(()=>{
+star.remove();
+},5000);
+
+}
+
+setInterval(createStar,200);
+
+</script>
+
+</body>
+</html>
